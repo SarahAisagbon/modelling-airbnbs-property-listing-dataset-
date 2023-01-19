@@ -1,0 +1,1 @@
+{"max_iter": 500, "multi_class": "auto", "solver": "newton-cg"}

@@ -1,0 +1,1 @@
+{"criterion": "absolute_error", "max_depth": 25, "max_features": 0.2, "min_samples_split": 4, "n_estimators": 60}
