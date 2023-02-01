@@ -15,7 +15,6 @@ np.random.seed(2)
 
 clean_data = pd.read_csv("/Users/sarahaisagbon/Downloads/clean_tabular_data.csv")
 #clean_data = pd.read_csv("tabular_data/clean_tabular_data.csv")
-X, label = tabular_data.load_airbnb(clean_data, "Category")
 X, y = tabular_data.load_airbnb(clean_data, "Price_Night")
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)

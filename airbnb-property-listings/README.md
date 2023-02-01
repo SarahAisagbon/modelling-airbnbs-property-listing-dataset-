@@ -417,10 +417,163 @@ def simple_classification_model(X_train, y_train, X_test):
 2. Evaluate the classification model performance
     - Evaluate the performance of this simple regression model
     - Initially used micro averaging but I got the same value for each
+
+```
+def evaluate_performance(X_train, y_train, X_test, y_test):
+    y_hat = simple_classification_model(X_train, y_train, X_test)
+    #evaluate the performance of this simple classification model
+    #Initially used micro averaging but I got the same value for each
+    Accuracy =  accuracy_score(y_test, y_hat)
+    Precision = precision_score(y_test, y_hat, average='macro', zero_division=0)
+    Recall = recall_score(y_test, y_hat, average='macro')
+    F1 = f1_score(y_test, y_hat, average='macro')
+    linear_regression_metrics = {'Model_Accuracy': Accuracy, 'Model_F1_Score': F1, 'Model_Precision_Score': Precision, 'Model_Recall_Score': Recall }
+    return linear_regression_metrics
+```
+
 3. Tune the hyperparameters of the models
+    - I created a function called tune_classification_model_hyperparameters, which took the agruments: the model class, training, validation, and test sets and a dictionary of hyperparameters.
+
+```
+def tune_classification_model_hyperparameters(model_class, X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace):
+    np.random.seed(2)
+    models_list =   {
+                    "LogisticRegression" : LogisticRegression,
+                    "DecisionTreeClassifier" : DecisionTreeClassifier,                   
+                    "RandomForestClassifier" : RandomForestClassifier,
+                    "GradientBoostingClassifier" : GradientBoostingClassifier
+                    }
+    model = models_list[model_class]()
+    
+    GS = GridSearchCV(estimator=model,
+                      param_grid=hyperpara_searchspace,
+                      scoring= ["accuracy", "recall_macro", "f1_macro"],
+                      refit= "accuracy"
+                      )
+    
+    GS.fit(X_train, y_train)
+    best_model = models_list[model_class](**GS.best_params_)
+    fitted_best_model = best_model.fit(X_train, y_train)
+    #make prediction using validation features set
+    y_hat_validation = best_model.predict(X_validation)
+    #check the accuracy, precision, recall and F1
+    validation_accuracy =  accuracy_score(y_validation, y_hat_validation)
+    #validation_precision = precision_score(y_validation, y_hat_validation, average="macro", zero_division=1)
+    validation_recall = recall_score(y_validation, y_hat_validation, average="macro")
+    validation_F1 = f1_score(y_validation, y_hat_validation, average="macro")
+    #put the errors in a dictionary
+    performance_metrics_dict = {"validation_accuracy" : validation_accuracy, "validation_recall": validation_recall, "validation_F1": validation_F1}
+    #find the model with the highest accuracy and that will be chosen as the best model
+    best_model_details = [fitted_best_model, GS.best_params_, performance_metrics_dict]
+    return best_model_details
+```
 
 4. Save the classification model
+    - I saved the classification model in a classification folder within the model folder.
+
+```
+def save_model(model_details, folder="models/classification/logistic_regression"):
+    regression_modelling.save_model(model_details, folder)
+
+```
 
 5. Beat the baseline classification model
+    - I improved the performance of the model.
 
+```
+def evaluate_all_models(task_folder="models/classification"):
+    np.random.seed(2)
+    #specify the serach spaces for hyperparameters in each model
+    logistic_regression_model = tune_classification_model_hyperparameters("LogisticRegression", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace = 
+    {
+    "max_iter" : [100, 500, 1000], 
+    "solver" : ["newton-cg", "sag", "saga", "lbfgs"], #suggested hyperparameter with solvers that work for multiclass classification
+    "multi_class": ["auto", "multinomial"] #another suggested hyperparameter with values that ork for multiclass classification
+    })
+    
+    print("Evaluation of Logistic Regression Model Complete!")
+    #save the decision model in a folder called logistic_regression
+    save_model(logistic_regression_model, folder=f"{task_folder}/logistic_regression")
+    print("Logistic Regression Saved!")
+    
+    decision_tree_model = tune_classification_model_hyperparameters("DecisionTreeClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace = 
+    {
+
+    "criterion" : [ "gini", "entropy", "log_loss"],
+    "max_depth" : [5, 6, 7, 8, 9, 10], #[10, 20, 30, 40],
+    "min_samples_split" : [2, 3, 4], #[0.2, 0.4, 2, 4], and got 2
+    "max_features" : [6, 7, 8, 9, 10] #[2, 4, 6, 8] and got 8
+    })
+    
+    print("Evaluation of Decision Tree Model Complete!")
+    #save the decision model in a folder called decision_tree
+    save_model(decision_tree_model, folder=f"{task_folder}/decision_tree")
+    print("Decision Tree Model Saved!")
+    
+    np.random.seed(2)
+    random_forest_model = tune_classification_model_hyperparameters("RandomForestClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace =
+    {
+    "n_estimators" : [60, 70, 80], #[50, 100] and got 50
+    "criterion" : ["gini", "entropy", "log_loss"],
+    "max_features" : [0.5, 0.6, 0.7], #[0.2, 0.4, 0.6] and got 0.6
+    "max_depth" : [5, 6, 7], #[8, 9, 10], and got 8 [9, 20] and got 9
+    "min_samples_split" : [2, 3, 4]
+    })
+    
+    print("Evaluation of Random Forest Model Complete!")
+    #save the Random Forest Model in a folder called random_forest
+    save_model(random_forest_model, folder=f"{task_folder}/random_forest")
+    print("Random Forest Model Saved!")
+    
+    np.random.seed(2)
+    gradient_boosting_model = tune_classification_model_hyperparameters("GradientBoostingClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace =
+    {
+    "learning_rate" : [0.05, 0.1, 0.2],
+    "loss" : ["log_loss"],
+    "n_estimators" : [7, 8, 9], #[5, 8, 10] and got 8, #[10, 20, 30], and got 10 [30, 50, 80], and got 30
+    "max_depth" : [3, 4, 5], #[5, 7, 8], and got 5
+    "max_features" : [2, 3, 4] #[1, 4, 9, 16, 25] and got 4
+    })
+
+    print("Evaluation of Gradient Boosting Model Complete!")
+    #save the Gradient Boosting Model in a folder called gradient_boosting
+    save_model(gradient_boosting_model, folder=f"{task_folder}/gradient_boosting")
+    print("Gradient Boosting Model Saved!")
+
+    return decision_tree_model, random_forest_model, gradient_boosting_model
+```
 6. Find the best overall classification model
+    - 
+
+```
+def find_best_model(model_details_list, best_model_indicator, task_folder):
+    #adapted the find_best_model in regression_modelling.py to work for a specified best_model_indicator and task_folder.
+    best_model_details = regression_modelling.find_best_model(model_details_list, best_model_indicator, task_folder)
+    return best_model_details
+```
+
+# Milestone 6
+
+### **Create a configurable neural network model**
+
+1. Create the Dataset and Dataloader
+    - Created a PyTorch Dataset called AirbnbNightlyPriceImageDataset which returns a tuple (features, label).
+    - Then, I created a dataloader for the train set, test set and validation set.
+2. Define the first neural network model
+    - I defined a PyTorch model class for a fully connected neural network.
+
+3. Create the training loop and train the model
+
+4. Visualise the loss and accuracy of the model
+
+5. Create a configuration file to change the characteristics of the model
+
+6. Save the model
+
+7. Tune the model
+
+I experienced a multiple problems such as a RunTimeError caused the training tensorsbeing different sizes. Another problem I enccountered was exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values. Firstly, I increased the batchsizes from 8 to 64 and then I changed the datetype from float32 to float64. 
+
+### Code Used: *neural_network_modelling.py*
+
+```
