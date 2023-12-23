@@ -16,236 +16,88 @@ Technologies / Skills:
 - Joblib
 - JSON
 
-### **Cleaning tabular data**
+### **1. Cleaning tabular data**
  - Cleaned the tabular data by removing missing ratings, formatting the descriptions and replacing na values in the feature column.
  - Saved cleaned data in [clean_tabular_data.csv](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/tabular_data/.clean_tabular_data.csv)
  - The data was returned as tuples (features and labels) to be used by a machine learning model
  - Can be found in [tabular_data.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/tabular_data.py) file
 
-### **Preparing the image data**
+### **2. Preparing the image data**
 - Checked that all images were RGB
 - Resized all images to the same height as the smallest image.
 - Saved them in [processed_images](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/processed_images) folder
 - Can be found in [prepare_image_data.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/prepare_image_data.py) file
 
-## Milestone 2: Creating a regression model
+## Milestone 2: Regression Model
 Technologies / Skills:
 - sklearn
 
-### **Creating a simple regression model**
+### **1. Training a simple regression model**
 - Imported load_airbnb function from [tabular_data.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/tabular_data.py)
 - Created a linear regression model using SGDRegressor model class
 - Can be found in the [regression_price_model.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/regression_price_model.py) file
 
-### **Evaluating the performance**
+### **2. Evaluating the performance**
 - Compute  and use the performance metrics: MSE, RMSE and R2 to evaluate the performance
 
-### **Implementing a custom function to tune the hyperparemeters of the model**
+### **3. Implementing a custom function to tune the hyperparemeters of the model**
 - Created the custom_tune_regression_model_hyperparameters function to implement the Grid Search method on the hyperparameters of a linear regression model, a decision tree model, a random forest model and a gradiant boosting model
 - Function returned the best model, a dictionary of the best hyperparameters for the model and a dictionary of performance metrics
 
-### **Tuning the hyperparameters using the GridSearchCV function in sklearn**
+### **4. Tuning the hyperparameters using the GridSearchCV function in sklearn**
 - This returned the same list as when the custom function was used
 
-### **Saving the model**
-- Create a save_model function to save the model, hyperparameter dictionary and performance metric dictionary in the [models]() folder
+### **5. Saving the model**
+- Created a save_model function to save the model, hyperparameter dictionary and performance metric dictionary in the [models](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models) folder
 
-### **Beating the baseline regression model**
-    - Define the evaluate_all_models function, which uses the tune_regression_model_hyperparameters function to improve the hyperparameters of the Decision Tree, Random Forest and Gradient Boosting models and therefore improving the models themselves. 
-    - Use the save_model function to save each model in their own folder within the [regression](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models/regression) folder.
+### **6. Beating the baseline regression model**
+    - Defined the evaluate_all_models function, which uses the tune_regression_model_hyperparameters function to improve the hyperparameters of the Decision Tree, Random Forest and Gradient Boosting models and the models themselves. 
+    - Used the save_model function to save each model in their own folder within the [regression](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models/regression) folder.
 
-### **Finding the best overall regression model**
-- Define the find_best_model function to find the best model based on RMSE and return it along with the model's hyperparameters dictionary and performance metrics dictionary.
+### **7. Finding the best overall regression model**
+- Defined the find_best_model function to find the best model based on RMSE and return it along with the model's hyperparameters dictionary and performance metrics dictionary.
 
-## Milestone 3: Documentation and Testing
+## Milestone 3: Classification Model
 
-# Milestone 5
+### **1. Training a simple classification model**
+- Imported load_airbnb function from [tabular_data.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/tabular_data.py)
+- Trained a simple classification model using SGDRegressor model class
+- Can be found in the [classification_modelling.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/classification_modelling.py) file
 
-### **Create a classification model**
-There were six tasks in this milestone
+### **2. Evaluating the performance**
+- Computed and used the performance metrics: MSE, RMSE and R2 to evaluate the performance
+- Initially, I used micro averaging but I got the same value for each
 
-1. Create a simple classification model
-    - Train a simple classification model
+### **3. Tuning the hyperparameters using the GridSearchCV function in sklearn**
+- Created the tune_classification_model_hyperparameters function to implement the Grid Search method on the hyperparameters of a logistic regression model, a decision tree model, a random forest model and a gradiant boosting model
 
-```
-def simple_classification_model(X_train, y_train, X_test):
-    #Train a simple classification model
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train, y_train)
-    y_hat = model.predict(X_test)
-    return y_hat
+### **4. Saving the model**
+- Created a save_model function, which uses the save_model function from the [regression_price_model.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/regression_price_model.py) file to save the model, hyperparameter dictionary and performance metric dictionary in the [models](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models) folder within the [classification](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models/classification) subfolder
 
-```
+### **5. Beating the baseline regression model**
+- I improved the performance of the model.
 
-2. Evaluate the classification model performance
-    - Evaluate the performance of this simple regression model
-    - Initially used micro averaging but I got the same value for each
+### **7. Finding the best overall regression model**
+- I adapted the find_best_model function from the [regression_price_model.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/regression_price_model.py) file
 
-```
-def evaluate_performance(X_train, y_train, X_test, y_test):
-    y_hat = simple_classification_model(X_train, y_train, X_test)
-    #evaluate the performance of this simple classification model
-    #Initially used micro averaging but I got the same value for each
-    Accuracy =  accuracy_score(y_test, y_hat)
-    Precision = precision_score(y_test, y_hat, average='macro', zero_division=0)
-    Recall = recall_score(y_test, y_hat, average='macro')
-    F1 = f1_score(y_test, y_hat, average='macro')
-    linear_regression_metrics = {'Model_Accuracy': Accuracy, 'Model_F1_Score': F1, 'Model_Precision_Score': Precision, 'Model_Recall_Score': Recall }
-    return linear_regression_metrics
-```
-
-3. Tune the hyperparameters of the models
-    - I created a function called tune_classification_model_hyperparameters, which took the agruments: the model class, training, validation, and test sets and a dictionary of hyperparameters.
-
-```
-def tune_classification_model_hyperparameters(model_class, X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace):
-    np.random.seed(2)
-    models_list =   {
-                    "LogisticRegression" : LogisticRegression,
-                    "DecisionTreeClassifier" : DecisionTreeClassifier,                   
-                    "RandomForestClassifier" : RandomForestClassifier,
-                    "GradientBoostingClassifier" : GradientBoostingClassifier
-                    }
-    model = models_list[model_class]()
-    
-    GS = GridSearchCV(estimator=model,
-                      param_grid=hyperpara_searchspace,
-                      scoring= ["accuracy", "recall_macro", "f1_macro"],
-                      refit= "accuracy"
-                      )
-    
-    GS.fit(X_train, y_train)
-    best_model = models_list[model_class](**GS.best_params_)
-    fitted_best_model = best_model.fit(X_train, y_train)
-    #make prediction using validation features set
-    y_hat_validation = best_model.predict(X_validation)
-    #check the accuracy, precision, recall and F1
-    validation_accuracy =  accuracy_score(y_validation, y_hat_validation)
-    #validation_precision = precision_score(y_validation, y_hat_validation, average="macro", zero_division=1)
-    validation_recall = recall_score(y_validation, y_hat_validation, average="macro")
-    validation_F1 = f1_score(y_validation, y_hat_validation, average="macro")
-    #put the errors in a dictionary
-    performance_metrics_dict = {"validation_accuracy" : validation_accuracy, "validation_recall": validation_recall, "validation_F1": validation_F1}
-    #find the model with the highest accuracy and that will be chosen as the best model
-    best_model_details = [fitted_best_model, GS.best_params_, performance_metrics_dict]
-    return best_model_details
-```
-
-4. Save the classification model
-    - I saved the classification model in a classification folder within the model folder.
-
-```
-def save_model(model_details, folder="models/classification/logistic_regression"):
-    regression_modelling.save_model(model_details, folder)
-
-```
-
-5. Beat the baseline classification model
-    - I improved the performance of the model.
-
-```
-def evaluate_all_models(task_folder="models/classification"):
-    np.random.seed(2)
-    #specify the serach spaces for hyperparameters in each model
-    logistic_regression_model = tune_classification_model_hyperparameters("LogisticRegression", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace = 
-    {
-    "max_iter" : [100, 500, 1000], 
-    "solver" : ["newton-cg", "sag", "saga", "lbfgs"], #suggested hyperparameter with solvers that work for multiclass classification
-    "multi_class": ["auto", "multinomial"] #another suggested hyperparameter with values that ork for multiclass classification
-    })
-    
-    print("Evaluation of Logistic Regression Model Complete!")
-    #save the decision model in a folder called logistic_regression
-    save_model(logistic_regression_model, folder=f"{task_folder}/logistic_regression")
-    print("Logistic Regression Saved!")
-    
-    decision_tree_model = tune_classification_model_hyperparameters("DecisionTreeClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace = 
-    {
-
-    "criterion" : [ "gini", "entropy", "log_loss"],
-    "max_depth" : [5, 6, 7, 8, 9, 10], #[10, 20, 30, 40],
-    "min_samples_split" : [2, 3, 4], #[0.2, 0.4, 2, 4], and got 2
-    "max_features" : [6, 7, 8, 9, 10] #[2, 4, 6, 8] and got 8
-    })
-    
-    print("Evaluation of Decision Tree Model Complete!")
-    #save the decision model in a folder called decision_tree
-    save_model(decision_tree_model, folder=f"{task_folder}/decision_tree")
-    print("Decision Tree Model Saved!")
-    
-    np.random.seed(2)
-    random_forest_model = tune_classification_model_hyperparameters("RandomForestClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace =
-    {
-    "n_estimators" : [60, 70, 80], #[50, 100] and got 50
-    "criterion" : ["gini", "entropy", "log_loss"],
-    "max_features" : [0.5, 0.6, 0.7], #[0.2, 0.4, 0.6] and got 0.6
-    "max_depth" : [5, 6, 7], #[8, 9, 10], and got 8 [9, 20] and got 9
-    "min_samples_split" : [2, 3, 4]
-    })
-    
-    print("Evaluation of Random Forest Model Complete!")
-    #save the Random Forest Model in a folder called random_forest
-    save_model(random_forest_model, folder=f"{task_folder}/random_forest")
-    print("Random Forest Model Saved!")
-    
-    np.random.seed(2)
-    gradient_boosting_model = tune_classification_model_hyperparameters("GradientBoostingClassifier", X_train, y_train, X_validation, y_validation, X_test, y_test, hyperpara_searchspace =
-    {
-    "learning_rate" : [0.05, 0.1, 0.2],
-    "loss" : ["log_loss"],
-    "n_estimators" : [7, 8, 9], #[5, 8, 10] and got 8, #[10, 20, 30], and got 10 [30, 50, 80], and got 30
-    "max_depth" : [3, 4, 5], #[5, 7, 8], and got 5
-    "max_features" : [2, 3, 4] #[1, 4, 9, 16, 25] and got 4
-    })
-
-    print("Evaluation of Gradient Boosting Model Complete!")
-    #save the Gradient Boosting Model in a folder called gradient_boosting
-    save_model(gradient_boosting_model, folder=f"{task_folder}/gradient_boosting")
-    print("Gradient Boosting Model Saved!")
-
-    return decision_tree_model, random_forest_model, gradient_boosting_model
-```
-6. Find the best overall classification model
-    - 
-
-```
-def find_best_model(model_details_list, best_model_indicator, task_folder):
-    #adapted the find_best_model in regression_modelling.py to work for a specified best_model_indicator and task_folder.
-    best_model_details = regression_modelling.find_best_model(model_details_list, best_model_indicator, task_folder)
-    return best_model_details
-```
-
+## Milestone 4: Configurable Neural Network Model
 Technologies / Skills:
-- Abstraction & Encapsulation in OOP
-- Renamed functions
-- Rearranged imports and from statements alphabetically
-- System, Integration, and Unit Testing
-    - unittest
-- Project Structure for Software Development
-- Google docstrings
+- Torch
+- YAML
+- OS
 
-Unit testing of public methods of the Scraper class was implemented using the python unittest framework and is found in [test_webscraping.py](https://github.com/SarahAisagbon/selenium-edge-scraper/blob/remote/Test/test_webscraping.py) file.
+### **1. Creating the Dataset and Dataloader**
+- Created a PyTorch Dataset called AirbnbNightlyPriceImageDataset which returns a tuple (features, label).
+- Created a dataloader for the train set, test set and validation set.
+- Can be found in [neural_network_pricing_model.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/neural_network_pricing_model.py)
 
-## Milestone 4: Containerising the Waterstones Web Scraper
-# Milestone 6
-
-### **Create a configurable neural network model**
-
-1. Create the Dataset and Dataloader
-    - Created a PyTorch Dataset called AirbnbNightlyPriceImageDataset which returns a tuple (features, label).
-    - Then, I created a dataloader for the train set, test set and validation set.
-2. Define the first neural network model
-    - I defined a PyTorch model class for a fully connected neural network.
-
-3. Create the training loop and train the model
-
-4. Visualise the loss and accuracy of the model
-
-5. Create a configuration file to change the characteristics of the model
-
-6. Save the model
-
-7. Tune the model
+### **2. Defining the first neural network model**
+- Defined a PyTorch model class for a fully connected neural network.
+### **3. Create the training loop and train the model**
+### **4. Visualise the loss and accuracy of the model**
+### **5. Create a configuration file to change the characteristics of the model**
+### **6. Save the model**
+### **7. Tune the model**
 
 I experienced a multiple problems such as a RunTimeError caused the training tensorsbeing different sizes. Another problem I enccountered was exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values. Firstly, I increased the batchsizes from 8 to 64 and then I changed the datetype from float32 to float64. 
 
