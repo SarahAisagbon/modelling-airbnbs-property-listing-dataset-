@@ -102,8 +102,11 @@ Technologies / Skills:
 ### **7. Tune the model**
 
 ### *Issues:*
-1. RunTimeError because the training tensors was different sizes. /n
-*Solution: Increased the batchsizes from 8 to 64* /n
-2.Value Error because of exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values. /n
+1. RunTimeError because the training tensors was different sizes.
+
+*Solution: Increased the batchsizes from 8 to 64* 
+
+2.Value Error because of exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values. 
+
 *Solution: Changed the datetype from float32 to float64*
 
