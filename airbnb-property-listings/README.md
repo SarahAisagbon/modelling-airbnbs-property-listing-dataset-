@@ -51,8 +51,8 @@ Technologies / Skills:
 - Created a save_model function to save the model, hyperparameter dictionary and performance metric dictionary in the [models](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models) folder
 
 ### **6. Beating the baseline regression model**
-    - Defined the evaluate_all_models function, which uses the tune_regression_model_hyperparameters function to improve the hyperparameters of the Decision Tree, Random Forest and Gradient Boosting models and the models themselves. 
-    - Used the save_model function to save each model in their own folder within the [regression](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models/regression) folder.
+- Defined the evaluate_all_models function, which uses the tune_regression_model_hyperparameters function to improve the hyperparameters of the Decision Tree, Random Forest and Gradient Boosting models and the models themselves. 
+- Used the save_model function to save each model in their own folder within the [regression](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/tree/main/airbnb-property-listings/models/regression) folder.
 
 ### **7. Finding the best overall regression model**
 - Defined the find_best_model function to find the best model based on RMSE and return it along with the model's hyperparameters dictionary and performance metrics dictionary.
