@@ -79,7 +79,7 @@ Technologies / Skills:
 ### **5. Beating the baseline regression model**
 - I improved the performance of the model.
 
-### **7. Finding the best overall regression model**
+### **6. Finding the best overall regression model**
 - I adapted the find_best_model function from the [regression_price_model.py](https://github.com/SarahAisagbon/modelling-airbnbs-property-listing-dataset-/blob/main/airbnb-property-listings/regression_price_model.py) file
 
 ## Milestone 4: Configurable Neural Network Model
@@ -102,8 +102,8 @@ Technologies / Skills:
 ### **7. Tune the model**
 
 ### *Issues:*
-1. RunTimeError because the training tensors was different sizes.
-*Solution: Increased the batchsizes from 8 to 64*
-2.Value Error because of exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values.
+1. RunTimeError because the training tensors was different sizes. \n
+*Solution: Increased the batchsizes from 8 to 64* \n
+2.Value Error because of exploding gradients. This means that when I trained my model sometimes I would get a Value Error as the y_hat_value would be full of NaN values. \n
 *Solution: Changed the datetype from float32 to float64*
 
