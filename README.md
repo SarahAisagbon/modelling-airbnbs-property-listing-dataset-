@@ -1,6 +1,6 @@
 # Modelling airbnbs property listing dataset
 This repository contains two folders:
-- airbnb property listing dataset
+- airbnb-property-listing
 - runs
 
 ## Airbnb Property Listing Dataset
